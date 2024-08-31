@@ -47,7 +47,7 @@ def main():
                 sys.exit("Game over!")
             for bullet in shots:
                 if ast.check_collision(bullet):
-                    ast.kill()
+                    ast.split()
                     bullet.kill()
         for dr in drawable:
             dr.draw(screen)
