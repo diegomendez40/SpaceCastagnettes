@@ -3,14 +3,15 @@ from constants import ASTEROID_MIN_RADIUS
 import pygame
 import random
 import math
+from typing import List, Tuple
 
 class Asteroid(CircleShape):
 
-    def __init__(self, x, y, radius):
+    def __init__(self, x: float, y: float, radius: float) -> None:
         super().__init__(x, y, radius)
         self.velocity = pygame.Vector2(0, 0)
 
-    def bezier_curve(self, p0, p1, p2, p3, num_points):
+    def bezier_curve(self, p0: Tuple[float, float], p1: Tuple[float, float], p2: Tuple[float, float], p3: Tuple[float, float], num_points: int) -> List[Tuple[int, int]]:
         points = []
         for i in range(num_points):
             t = i / (num_points - 1)
@@ -19,7 +20,7 @@ class Asteroid(CircleShape):
             points.append((int(x), int(y)))
         return points
 
-    def draw(self, screen):
+    def draw(self, screen: pygame.Surface) -> None:
         # Puntos de control para las curvas Bézier
         p0 = (self.position.x, self.position.y - self.radius)
         p1 = (self.position.x + self.radius, self.position.y - self.radius * 0.5)
@@ -51,7 +52,7 @@ class Asteroid(CircleShape):
             pygame.draw.circle(screen, 'white', point_pos, 2)
 
 
-    def draw_castanet_shape(self, screen):
+    def draw_castanet_shape(self, screen: pygame.Surface) -> None:
         num_points = 20
         points = []
         for i in range(num_points):
@@ -63,7 +64,7 @@ class Asteroid(CircleShape):
         pygame.draw.polygon(screen, 'white', points, width=2)
 
 
-    def split(self):
+    def split(self) -> Tuple['Asteroid', 'Asteroid'] | None:
         self.kill()
         if self.radius <= ASTEROID_MIN_RADIUS:
             return
@@ -79,5 +80,5 @@ class Asteroid(CircleShape):
             ast2.velocity = v2 * 1.2
         return (ast1, ast2)
 
-    def update(self, dt):
+    def update(self, dt: float) -> None:
         self.position += self.velocity * dt

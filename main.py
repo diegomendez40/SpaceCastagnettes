@@ -10,7 +10,7 @@ from player import *
 from asteroid import *
 from asteroidfield import *
 
-def main():
+def main() -> None:
     pygame.init()
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
     screen.fill((0,0,0))
