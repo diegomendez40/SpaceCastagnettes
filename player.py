@@ -15,7 +15,7 @@ class Player(CircleShape):
         super().__init__(x, y, PLAYER_RADIUS)
         self.rotation = 0
         self.shoot_timer = 0
-
+        self.score = 0  # Añadimos el atributo de puntuación
 
     def triangle(self):
         forward = pygame.Vector2(0, 1).rotate(self.rotation)
@@ -61,3 +61,6 @@ class Player(CircleShape):
             if self.shoot_timer <= 0:
                 self.shoot()
                 self.shoot_timer = PLAYER_SHOOT_COOLDOWN
+
+    def increase_score(self, points):
+        self.score += points

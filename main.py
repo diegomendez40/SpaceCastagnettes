@@ -3,6 +3,7 @@
 # throughout this file
 import pygame
 import sys
+import pygame.font
 
 from constants import *
 from player import *
@@ -35,6 +36,7 @@ def main():
     asteroid_field = AsteroidField()
     clock = pygame.time.Clock()
     dt = 0
+    font = pygame.font.Font(None, 36)
     while True:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -47,13 +49,16 @@ def main():
                 sys.exit("Game over!")
             for bullet in shots:
                 if ast.check_collision(bullet):
+                    player.increase_score(ASTEROID_SCORE_VALUE)
                     ast.split()
                     bullet.kill()
         for dr in drawable:
             dr.draw(screen)
+        # Dibujar la puntuación
+        score_text = font.render(f"Score / Puntuación: {player.score}", True, (255, 255, 255))
+        screen.blit(score_text, (10, 10))
         pygame.display.flip()
         dt = clock.tick(60)/1000
-
 
 if __name__ == "__main__":
     main()
